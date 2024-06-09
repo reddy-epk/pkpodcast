@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-//import {useHistory} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import Modal from 'react-modal'
 
 import {FaPodcast} from 'react-icons/fa6'
@@ -18,22 +18,23 @@ const customStyles = {
 }
 
 const HomeContent = () => {
-  //  const history = useHistory()
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
   const [projectName, setProjectName] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [projectNames, setProjectNames] = useState([])
 
-  function handleCreate() {
+  const handleCreate = () => {
     setIsOpen(false)
     if (projectName.trim() === '') {
       setErrorMessage("Project name can't be empty")
       setIsOpen(true)
     } else {
-      const updatedNames = [...projectNames, projectName] // Add new name to array
+      const updatedNames = [...projectNames, projectName]
       setProjectNames(updatedNames)
-      localStorage.setItem('projectName', JSON.stringify(updatedNames)) // Store updated array
-      setProjectName('') // Clear input field after successful creation
+      localStorage.setItem('projectName', JSON.stringify(updatedNames))
+      setProjectName('')
+      navigate('/projects') // Use navigate function to navigate to Projects route
     }
   }
 
